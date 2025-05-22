@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="lo">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ເມນູອາຫານ</title>
+    <style>
+      body {
+        font-family: "Noto Sans Lao", sans-serif;
+        background: url("j.jpg") no-repeat center center fixed;
+        background-size: cover;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        color: #b22222;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+        border-radius: 8px;
+      }
+      .menu-item {
+        display: flex;
+        justify-content: space-between;
+        margin: 6px 0;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.85);
+      }
+      .menu-item:hover {
+        background-color: #fdd;
+      }
+      #bill {
+        margin-top: 30px;
+        padding: 15px;
+        border: 2px dashed #b22222;
+        background-color: rgba(255, 240, 240, 0.9);
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ເມນູອາຫານແລະເຄື່ອງດື່ມ</h1>
+
+    <div id="menu"></div>
+
+    <div id="bill">
+      <h2>🧾 ບິນຮັບເງິນ</h2>
+      <ul id="order-list"></ul>
+      <p><strong>ລາຄາລວມ:</strong> <span id="total">0</span> ກີບ</p>
+    </div>
+
+    <script>
+      const menu = {
+        1: ["ເຂົ້າຜັດ", 15000],
+        2: ["ເຝີ", 20000],
+        3: ["ສຸກີ້", 25000],
+        4: ["ເປັດຍ່າງ", 30000],
+        5: ["ຂ້າວກະເພົາ", 18000],
+        6: ["ນ້ຳ", 5000],
+        7: ["ນ້ຳອັດລົມ", 8000],
+        8: ["ຊາເຢັນ", 10000],
+        9: ["ກາເຟ", 12000],
+        10: ["ເຂົ້າຫມູກະທຽມ", 16000],
+        11: ["ເຂົ້າໄກ່ທອດ", 17000],
+        12: ["ລາບຫມູ", 20000],
+        13: ["ຕົ້ມຍຳກຸ້ງ", 25000],
+        14: ["ຂົວະໝີ່", 18000],
+        15: ["ໝີ່ຂວົນ", 15000],
+        16: ["ເຂົ້າຫມູແດງ", 20000],
+        17: ["ເຂົ້າໄກ່ຕົ້ມ", 15000],
+        18: ["ຂົນມີ່ເຮັດມື", 10000],
+        19: ["ຂ້າວໜຽວໄກ່ຍ່າງ", 22000],
+        20: ["ແກງເຂົາຫຼວງ", 17000],
+        21: ["ແກງຜັກຂຽວ", 16000],
+        22: ["ຂົ້ວປາທອດ", 23000],
+        23: ["ເຂົ້າປຽກ", 14000],
+        24: ["ຫໍ່ມົວ", 18000],
+        25: ["ຂ້າວຜັດປູ", 19000],
+        26: ["ຂ້າວຜັດໄຂ່ເຄັມ", 16000],
+        27: ["ຜັດໄທ", 21000],
+        28: ["ແກງປ່າ", 20000],
+        29: ["ນ້ຳສົ້ມຊຸກໂກລາ", 9000],
+      };
+
+      const menuDiv = document.getElementById("menu");
+      const orderList = document.getElementById("order-list");
+      const totalEl = document.getElementById("total");
+
+      let orders = {};
+      let total = 0;
+
+      for (let key in menu) {
+        const [name, price] = menu[key];
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "menu-item";
+        itemDiv.innerHTML = `<span>${name}</span><span>${price.toLocaleString()} ກີບ</span>`;
+        itemDiv.onclick = () => {
+          if (!orders[key]) orders[key] = 0;
+          orders[key]++;
+          updateBill();
+        };
+        menuDiv.appendChild(itemDiv);
+      }
+
+      function updateBill() {
+        orderList.innerHTML = "";
+        total = 0;
+        for (let key in orders) {
+          const [name, price] = menu[key];
+          const qty = orders[key];
+          const itemTotal = qty * price;
+          total += itemTotal;
+          const li = document.createElement("li");
+          li.textContent = `${name} x ${qty} = ${itemTotal.toLocaleString()} ກີບ`;
+          orderList.appendChild(li);
+        }
+        totalEl.textContent = total.toLocaleString();
+      }
+    </script>
+  </body>
+</html>
